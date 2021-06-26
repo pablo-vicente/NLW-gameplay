@@ -1,17 +1,34 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import { styles } from "./styles";
 
+import DiscordSvg from '../../assets/discord.svg'
 
-export function GuildIcon() {
-    const uri = 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F2%2FVolvo-PNG-Image-HD.png&f=1&nofb=1'
+const { CND_IMAGE } = process.env;
+
+type Props = {
+    guildId: string,
+    iconId: string | null
+}
+
+export function GuildIcon({ guildId, iconId }: Props) {
+    const uri = `${CND_IMAGE}/icons/${guildId}/${iconId}.png`;
+
+
     return (
-
-        <Image
-            source={{ uri }}
-            style={styles.image}
-            resizeMode='cover'
-        />
-
+        <View style={styles.container}>
+            {
+                iconId ?
+                    <Image
+                        source={{ uri }}
+                        style={styles.image}
+                        resizeMode='cover'
+                    /> :
+                    <DiscordSvg
+                        width={40}
+                        height={40}
+                    />
+            }
+        </View>
     );
 }
